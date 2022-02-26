@@ -1,0 +1,66 @@
+package vetClinic;
+
+import java.util.*;
+
+public class Clinic {
+    private int capacity;
+    private List<Pet> data;
+
+    public Clinic(int capacity) {
+        this.capacity = capacity;
+        this.data = new ArrayList<>();
+    }
+
+    public List<Pet> getData() {
+        return data;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+
+    }
+
+    public void add(Pet pet) {
+        if (this.capacity >= this.data.size() + 1) {
+            this.data.add(pet);
+        }
+    }
+
+    public boolean remove(String name) {
+        for (Pet pet : this.data) {
+            if (pet.getName().equals(name)) {
+                this.data.remove(pet);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Pet getPet(String name, String owner) {
+        Pet pet = null;
+        for (Pet animal : this.data) {
+            if (animal.getName().equals(name) && animal.getOwner().equals(owner)) {
+                pet = animal;
+            }
+        }
+        return pet;
+    }
+
+    public Pet getOldestPet() {
+        return Collections.max(this.data, Comparator.comparing(Pet::getAge));
+    }
+
+    public int getCount() {
+        return this.data.size();
+    }
+
+    public String getStatistics() {
+        StringBuilder statistics = new StringBuilder();
+        statistics.append("The clinic has the following patients:");
+        statistics.append(System.lineSeparator());
+        for (Pet animal : this.data) {
+            statistics.append(animal.getName() + " " + animal.getOwner() + System.lineSeparator());
+        }
+        return statistics.toString();
+    }
+}
